@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tanks.MVC;
 
-public class TankService : MonoBehaviour //SingletonGenerics<TankService>
+public class TankService : SingletonGenerics<TankService> // MonoBehaviour
 {
     public TankView TankView;
     private TankModel playerModel;

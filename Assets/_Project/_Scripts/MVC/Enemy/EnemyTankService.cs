@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTankService : MonoBehaviour
+public class EnemyTankService : SingletonGenerics<EnemyTankService>
 {
     public EnemyTankView EnemyTankView;
     private EnemyTankModel EnemyTankModel;

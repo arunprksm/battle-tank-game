@@ -55,14 +55,6 @@ namespace Tanks.MVC
             TankView.fillImage.color = Color.Lerp(TankView.zeroHealthColor, TankView.fullHealthColor, TankModel.currentHealth / TankModel.TankHealth);
         }
 
-        //public void CheckDamage()
-        //{
-        //    if (!TankView.tankDead && TankView.fire0)
-        //    {
-        //        TakeDamage(10);
-        //    }
-        //}
-
         public void ApplyDamage(float amount)
         {
             TankModel.currentHealth -= amount;
@@ -74,7 +66,6 @@ namespace Tanks.MVC
                 TankDestroy();
                 return;
             }
-            Debug.Log("Player Take Damage " + TankModel.currentHealth);
             SetHealthUI();
         }
 
