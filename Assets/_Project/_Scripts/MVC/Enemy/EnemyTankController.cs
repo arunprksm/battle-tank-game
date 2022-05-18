@@ -36,7 +36,7 @@ public class EnemyTankController
         EnemyTankView.sliderHealth.value = EnemyTankModel.currentHealth;
         EnemyTankView.fillImage.color = Color.Lerp(EnemyTankView.zeroHealthColor, EnemyTankView.fullHealthColor, EnemyTankModel.currentHealth / EnemyTankModel.TankHealth);
     }
-    
+
 
     public void ApplyDamage(float damage)
     {
@@ -51,58 +51,61 @@ public class EnemyTankController
         //Debug.Log("Enemy Take Damage " + EnemyTankModel.currentHealth);
         SetHealthUI();
     }
+
+    
     private void TankDestroy()
     {
+
+        //EnemyTankView.GameUI.OnDeath += EnemyTankView.GameUI.GameUI_OnDeath;
+
         EnemyTankView.enemyTankDead = true;
         EnemyTankView.gameObject.SetActive(false);
         EnemyTankView.Destroy(EnemyTankView.gameObject);
+        //EnemyTankView.GameUI.OnDeath -= EnemyTankView.GameUI.GameUI_OnDeath;
     }
+
+
     public void Fire()
     {
         Rigidbody shellInstance = Object.Instantiate(EnemyTankView.shellPrefab, EnemyTankView.fireTransform.position, EnemyTankView.fireTransform.rotation) as Rigidbody;
-        //EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MaxLaunchForce;
         shellInstance.velocity = 10f * EnemyTankView.fireTransform.forward;
-        //EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MinLaunchForce;
-
-        //shellInstance.AddForce(EnemyTankView.fireTransform.forward * 5f, ForceMode.Impulse);
-        //shellInstance.AddForce(EnemyTankView.fireTransform.up * 7, ForceMode.Impulse);
     }
 }
 
-    //public void FireControl()
-    //{
-    //    EnemyTankView.aimSlider.value = EnemyTankModel.MinLaunchForce;
+//public void FireControl()
+//{
+//    EnemyTankView.aimSlider.value = EnemyTankModel.MinLaunchForce;
 
-    //    if (EnemyTankModel.CurrentLaunchForce >= EnemyTankModel.MaxLaunchForce && !EnemyTankView.fired)
-    //    {
-    //        EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MaxLaunchForce;
-    //        Fire();
-    //    }
-    //    else if (EnemyTankView.fire1)
-    //    {
-    //        EnemyTankView.fired = false;
-    //        EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MinLaunchForce;
-    //    }
-    //    else if (EnemyTankView.fire0 && !EnemyTankView.fired)
-    //    {
-    //        EnemyTankModel.CurrentLaunchForce += EnemyTankModel.ChargeSpeed * Time.deltaTime;
+//    if (EnemyTankModel.CurrentLaunchForce >= EnemyTankModel.MaxLaunchForce && !EnemyTankView.fired)
+//    {
+//        EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MaxLaunchForce;
+//        Fire();
+//    }
+//    else if (EnemyTankView.fire1)
+//    {
+//        EnemyTankView.fired = false;
+//        EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MinLaunchForce;
+//    }
+//    else if (EnemyTankView.fire0 && !EnemyTankView.fired)
+//    {
+//        EnemyTankModel.CurrentLaunchForce += EnemyTankModel.ChargeSpeed * Time.deltaTime;
 
-    //        EnemyTankView.aimSlider.value = EnemyTankModel.CurrentLaunchForce;
-    //    }
-    //    else if (EnemyTankView.fire3 && !EnemyTankView.fired)
-    //    {
-    //        Fire();
-    //    }
-    //}
+//        EnemyTankView.aimSlider.value = EnemyTankModel.CurrentLaunchForce;
+//    }
+//    else if (EnemyTankView.fire3 && !EnemyTankView.fired)
+//    {
+//        Fire();
+//    }
+//}
 
-    //public void Fire()
-    //{
-    //    EnemyTankView.fired = true;
+//public void Fire()
+//{
+//    EnemyTankView.fired = true;
 
-    //    Rigidbody shellInstance = GameObject.Instantiate(EnemyTankView.shellPrefab, EnemyTankView.fireTransform.position, EnemyTankView.fireTransform.rotation) as Rigidbody;
+//    Rigidbody shellInstance = GameObject.Instantiate(EnemyTankView.shellPrefab, EnemyTankView.fireTransform.position, EnemyTankView.fireTransform.rotation) as Rigidbody;
 
-    //    //shellInstance.velocity = EnemyTankModel.CurrentLaunchForce * EnemyTankView.fireTransform.forward;
-    //    shellInstance.velocity = 30f * EnemyTankView.fireTransform.forward;
+//    //shellInstance.velocity = EnemyTankModel.CurrentLaunchForce * EnemyTankView.fireTransform.forward;
+//    shellInstance.velocity = 30f * EnemyTankView.fireTransform.forward;
 
-    //    EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MinLaunchForce;
-    //}
+//    EnemyTankModel.CurrentLaunchForce = EnemyTankModel.MinLaunchForce;
+//}

@@ -10,6 +10,7 @@ public class EnemyTankView : MonoBehaviour, IDamagable
 {
     public TankType tankType;
     public EnemyTankController EnemyTankController;
+    public GameUI GameUI;
 
     public Slider sliderHealth;
     public Image fillImage;
@@ -37,6 +38,7 @@ public class EnemyTankView : MonoBehaviour, IDamagable
     private void InitializeComponenets()
     {
         //rb = GetComponent<Rigidbody>();
+        GameUI = FindObjectOfType<GameUI>();
     }
     public void FireFunction()
     {
@@ -46,5 +48,12 @@ public class EnemyTankView : MonoBehaviour, IDamagable
     {
         //Debug.Log("EnemyTank Taking Damage" + damage);
         EnemyTankController.ApplyDamage(damage);
+    }
+
+    private void OnDisable()
+    {
+        GameUI.OnDeath += GameUI.GameUI_OnDeath;
+        //GameUI.OnDeathCount += GameUI.GameUI_OnDeathCount;
+        //GameUI.OnDeath?.Invoke();
     }
 }

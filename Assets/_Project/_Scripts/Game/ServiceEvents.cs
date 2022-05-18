@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class ServiceEvents : SingletonGenerics<ServiceEvents>
 {
-    public event Action OnPlayerDeath;
+    public static event Action OnPlayerDeath;
 
-    public event Action OnGameLoaded;
-    public event Action OnGameStarted;
-    public event Action OnGamePaused;
-    public event Action OnGameEnded;
-    public event Action OnGameFailed;
+    public static event Action OnGameLoaded;
+    public static event Action OnGameStarted;
+    public static event Action OnGamePaused;
+    public static event Action OnGameEnded;
+    public static event Action OnGameFailed;
 
-    public event Action<int> OnPurchaseSuccess;
-    public event Action<int> OnPurchaseFailed;
-    public event Action<int> OnPurchaseCancelled;
+    public static event Action<int> OnPurchaseSuccess;
+    public static event Action<int> OnPurchaseFailed;
+    public static event Action<int> OnPurchaseCancelled;
 
 }
