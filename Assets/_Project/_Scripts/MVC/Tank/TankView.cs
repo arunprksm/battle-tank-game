@@ -30,6 +30,8 @@ public class TankView : MonoBehaviour,IDamagable
 
     public bool fired;
     internal bool tankDead;
+
+    public GameUI GameUI;
     private void Awake()
     {
         InitializeComponenets();
@@ -49,6 +51,7 @@ public class TankView : MonoBehaviour,IDamagable
     private void InitializeComponenets()
     {
         rb = GetComponent<Rigidbody>();
+        GameUI = FindObjectOfType<GameUI>();
     }
     public void PlayerTankInput()
     {

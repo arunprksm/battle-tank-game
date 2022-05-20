@@ -78,7 +78,6 @@ namespace Tanks.MVC
         public void FireControl()
         {
             TankView.aimSlider.value = TankModel.MinLaunchForce;
-
             if (TankModel.CurrentLaunchForce >= TankModel.MaxLaunchForce && !TankView.fired)
             {
                 TankModel.CurrentLaunchForce = TankModel.MaxLaunchForce;
@@ -108,9 +107,8 @@ namespace Tanks.MVC
         private void Fire()
         {
             TankView.fired = true;
-
+            GameUI.PlayerBulletFired += TankView.GameUI.CheckUIBulletCount;
             Rigidbody shellInstance = GameObject.Instantiate(TankView.shellPrefab, TankView.fireTransform.position, TankView.fireTransform.rotation, TankView.fireTransform) as Rigidbody;
-
             shellInstance.velocity = TankModel.CurrentLaunchForce * TankView.fireTransform.forward;
 
             // Change the clip to the firing clip and play it.

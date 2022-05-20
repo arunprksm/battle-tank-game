@@ -53,7 +53,6 @@ public class EnemyTankView : MonoBehaviour, IDamagable
     private void OnDisable()
     {
         GameUI.OnDeath += GameUI.GameUI_OnDeath;
-        //GameUI.OnDeathCount += GameUI.GameUI_OnDeathCount;
-        //GameUI.OnDeath?.Invoke();
+        GameUI.OnDeathCount += GameUI.GameUI_OnDeathCount;
     }
 }
