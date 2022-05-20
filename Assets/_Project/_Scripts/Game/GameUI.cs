@@ -101,9 +101,6 @@ public class GameUI : SingletonGenerics<GameUI>
 }
 
 
-
-
-
 //Reference Script for future
 /* 
   public event Action<int, int> onDeath;
