@@ -21,6 +21,11 @@ public class GameUI : SingletonGenerics<GameUI>
 
     private int enemyTankKillCount = 0;
     private int playerBulletFiredCount = 0;
+
+    public GameObject TENBulletsfired;
+    public GameObject T5Bulletsfired;
+    public GameObject Enemies3Killed;
+
     private void Start()
     {
         playerKillUI.SetActive(false);
@@ -31,6 +36,7 @@ public class GameUI : SingletonGenerics<GameUI>
         OnDeath?.Invoke();
         OnDeathCount?.Invoke();
         PlayerBulletFired?.Invoke();
+        CheckAchievementSystem();
     }
         
     public void GameUI_OnDeath()
@@ -61,6 +67,23 @@ public class GameUI : SingletonGenerics<GameUI>
         playerBulletFiredCount++;
         PlayerBulletFiredCountUI.text = "Bullets Fired: " + playerBulletFiredCount.ToString();
         PlayerBulletFired -= CheckUIBulletCount;
+    }
+
+
+    private void CheckAchievementSystem()
+    {
+        if (playerBulletFiredCount == 10)
+        {
+            TENBulletsfired.SetActive(true);
+        }
+        if(playerBulletFiredCount == 25)
+        {
+            T5Bulletsfired.SetActive(true);
+        }
+        if(enemyTankKillCount == 3)
+        {
+            Enemies3Killed.SetActive(true);
+        }
     }
     private void OnDisable()
     {
