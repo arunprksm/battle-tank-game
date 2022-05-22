@@ -3,26 +3,22 @@ namespace Tanks.MVC
 {
     public class TankController
     {
-
-        public TankModel TankModel { get; }
         public TankView TankView { get; }
-        public TankController()
-        {
-            TankView.tankController = this;
-        }
+        public TankModel TankModel { get; }
+        
         public TankController(TankModel tankModel, TankView tankPrefab, Vector3 spawnPlayer)
         {
             TankModel = tankModel;
             TankView = Object.Instantiate(tankPrefab);
-            Debug.Log("Tank View Created", TankView);
-            TankView.tankController = this;
+            //Debug.Log("Tank View Created", TankView);
+            TankView.TankController = this;
             tankPrefab.transform.position = spawnPlayer;
             OnEnableFunction();
         }
 
         public void PlayerTankMovement()
         {
-            Vector3 movement = TankModel.tankSpeed * TankView.playerMoveVertical * Time.deltaTime * TankView.transform.forward;
+            Vector3 movement = TankModel.TankSpeed * TankView.playerMoveVertical * Time.deltaTime * TankView.transform.forward;
             TankView.rb.MovePosition(TankView.rb.position + movement);
         }
         public void PlayerTankRotation()
@@ -30,52 +26,107 @@ namespace Tanks.MVC
             float turn;
             if (TankView.playerMoveVertical != 0)
             {
-                turn = TankView.playerMoveVertical * TankView.playerTurnHorizontal * TankModel.tankTurnSpeed * Time.deltaTime;
+                turn = TankView.playerMoveVertical * TankView.playerTurnHorizontal * TankModel.TankTurnSpeed * Time.deltaTime;
             }
             else
             {
-                turn = TankView.playerTurnHorizontal * TankModel.tankTurnSpeed * Time.deltaTime;
+                turn = TankView.playerTurnHorizontal * TankModel.TankTurnSpeed * Time.deltaTime;
             }
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
             TankView.rb.MoveRotation(TankView.rb.rotation * turnRotation);
         }
 
+        internal void StartFunction()
+        {
+            TankModel.ChargeSpeed = (TankModel.MaxLaunchForce - TankModel.MinLaunchForce) / TankModel.MaxChargeTime;
+        }
+
         public void OnEnableFunction()
         {
-            TankView.currentHealth = TankModel.tankHealth;
+            TankModel.CurrentLaunchForce = TankModel.MinLaunchForce;
+            TankView.aimSlider.value = TankModel.MinLaunchForce;
+            TankModel.currentHealth = TankModel.TankHealth;
             TankView.tankDead = false;
-
             SetHealthUI();
         }
         private void SetHealthUI()
         {
-            TankView.sliderHealth.value = TankView.currentHealth;
-            TankView.fillImage.color = Color.Lerp(TankView.zeroHealthColor, TankView.fullHealthColor, TankView.currentHealth / TankModel.tankHealth);
+            TankView.sliderHealth.value = TankModel.currentHealth;
+            TankView.fillImage.color = Color.Lerp(TankView.zeroHealthColor, TankView.fullHealthColor, TankModel.currentHealth / TankModel.TankHealth);
         }
 
-        public void TakeDamage(float amount)
+        //public void CheckDamage()
+        //{
+        //    if (!TankView.tankDead && TankView.fire0)
+        //    {
+        //        TakeDamage(10);
+        //    }
+        //}
+
+        public void ApplyDamage(float amount)
         {
-            TankView.currentHealth -= amount;
+            TankModel.currentHealth -= amount;
 
-            SetHealthUI();
-
-            if (TankView.currentHealth <= 0f && !TankView.tankDead)
+            if (!TankView.tankDead && TankModel.currentHealth <= 0f)
             {
-                OnDeath();
+                TankModel.currentHealth = 0;
+                SetHealthUI();
+                TankDestroy();
+                return;
             }
+            Debug.Log("Player Take Damage " + TankModel.currentHealth);
+            SetHealthUI();
         }
-        private void OnDeath()
+
+        private void TankDestroy()
         {
             TankView.tankDead = true;
             TankView.gameObject.SetActive(false);
+            TankView.Destroy(TankView.gameObject);
+        }
+        public void FireControl()
+        {
+            TankView.aimSlider.value = TankModel.MinLaunchForce;
+
+            if (TankModel.CurrentLaunchForce >= TankModel.MaxLaunchForce && !TankView.fired)
+            {
+                TankModel.CurrentLaunchForce = TankModel.MaxLaunchForce;
+                Fire();
+            }
+            else if (TankView.fire1)
+            {
+                TankView.fired = false;
+                TankModel.CurrentLaunchForce = TankModel.MinLaunchForce;
+
+                // Change the clip to the charging clip and start it playing.
+                //TankView.m_ShootingAudio.clip = TankView.m_ChargingClip;
+                //TankView.m_ShootingAudio.Play();
+            }
+            else if (TankView.fire0 && !TankView.fired)
+            {
+                TankModel.CurrentLaunchForce += TankModel.ChargeSpeed * Time.deltaTime;
+
+                TankView.aimSlider.value = TankModel.CurrentLaunchForce;
+            }
+            else if (TankView.fire3 && !TankView.fired)
+            {
+                Fire();
+            }
         }
 
-        public void CheckDamage()
+        private void Fire()
         {
-            if (!TankView.tankDead && TankView.fire)
-            {
-                TakeDamage(10);
-            }
+            TankView.fired = true;
+
+            Rigidbody shellInstance = GameObject.Instantiate(TankView.shellPrefab, TankView.fireTransform.position, TankView.fireTransform.rotation, TankView.fireTransform) as Rigidbody;
+
+            shellInstance.velocity = TankModel.CurrentLaunchForce * TankView.fireTransform.forward;
+
+            // Change the clip to the firing clip and play it.
+            //TankView.m_ShootingAudio.clip = TankView.m_FireClip;
+            //TankView.m_ShootingAudio.Play();
+
+            TankModel.CurrentLaunchForce = TankModel.MinLaunchForce;
         }
     }
 }
