@@ -16,8 +16,8 @@ MonoBehaviour:
   scale: {x: 2, y: 2, z: 2}
   tankName: Big Tank
   speed: 5
-  tankTurnSpeed: 50
-  Health: 200
+  tankTurnSpeed: 100
+  Health: 400
   damage: 60
   color: {r: 0.07006645, g: 1, b: 0, a: 0}
   minLaunchForce: 5

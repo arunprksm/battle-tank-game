@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Tanks.MVC;
+using UnityEngine.SceneManagement;
 public class GameUI : SingletonGenerics<GameUI>
 {
     public static event Action OnDeath;
@@ -90,10 +90,15 @@ public class GameUI : SingletonGenerics<GameUI>
         OnDeath -= GameUI_OnDeath;
         OnDeathCount -= GameUI_OnDeathCount;
     }
+
+    public void RestartGame()
+    {
+        playerKillUI.SetActive(false);
+        OnDeath -= GameUI_OnDeath;
+        OnDeathCount -= GameUI_OnDeathCount;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
-
-
-
 
 
 //Reference Script for future

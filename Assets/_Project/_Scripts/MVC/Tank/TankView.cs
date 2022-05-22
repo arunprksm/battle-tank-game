@@ -32,16 +32,16 @@ public class TankView : MonoBehaviour,IDamagable
     internal bool tankDead;
 
     public GameUI GameUI;
+
     private void Awake()
     {
         InitializeComponenets();
     }
+    
     private void Start()
     {
         //Debug.Log("Tank View Created");
         TankController.StartFunction();
-        //ChangeState(startingState);
-
     }
     private void Update()
     {

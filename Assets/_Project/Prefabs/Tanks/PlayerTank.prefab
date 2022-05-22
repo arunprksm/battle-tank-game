@@ -286,7 +286,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3159135730154750055}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -324,6 +324,7 @@ MonoBehaviour:
   fireTransform: {fileID: 7301502947246304858}
   aimSlider: {fileID: 8028293280668974139}
   fired: 0
+  GameUI: {fileID: 0}
 --- !u!1 &4079794772362888693
 GameObject:
   m_ObjectHideFlags: 0
